@@ -41,6 +41,15 @@ class SearchViewController: UIViewController {
 //        selectedBackgroundView = selectedView
 //    }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetail" {
+            let detailViewController = segue.destination as! DetailViewController
+            let indexPath = sender as! IndexPath
+            let searchResult = searchResults[indexPath.row]
+            detailViewController.searchResult = searchResult
+        }
+    }
+    
     @IBAction func segmentedChanged(_ sender: UISegmentedControl) {
         performSearch()
     }
@@ -189,11 +198,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         performSegue(withIdentifier: "ShowDetail", sender: indexPath)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowDetail" {
-            segue.destination.modalPresentationStyle = .overFullScreen
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "ShowDetail" {
+//            segue.destination.modalPresentationStyle = .overFullScreen
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if searchResults.count == 0 || isLoading {
